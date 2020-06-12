@@ -27,6 +27,7 @@
   ],
   "dependencies": {
     "@google-cloud/storage": "^5.0.1",
+    "@sublet/safeplaces-server": "0.0.7",
     "adm-zip": "^0.4.14",
     "atob": "^2.1.2",
     "aws-sdk": "^2.692.0",
@@ -70,6 +71,7 @@
     "pre-commit": "^1.2.2",
     "prettier": "^2.0.5",
     "random-coordinates": "^1.0.1",
+    "supertest": "^4.0.2",
     "uuidv4": "^6.0.9"
   }
 }

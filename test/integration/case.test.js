@@ -11,13 +11,15 @@ const jwt = require('jsonwebtoken');
 
 const mockData = require('../lib/mockData');
 
-const server = require('../../app');
 const casesService = require('../../db/models/cases');
 const pointsService = require('../../db/models/points');
 
 const jwtSecret = require('../../config/jwtConfig');
 
 const type = (process.env.PUBLISH_STORAGE_TYPE || 'local');
+
+const app = require('../../app');
+const server = app.getTestingServer();
 
 chai.use(chaiHttp);
 
@@ -73,7 +75,7 @@ describe('Case', () => {
 
     it('and return multiple case points', async () => {
       const results = await chai
-        .request(server.app)
+        .request(server)
         .post(`/case/points`)
         .set('Authorization', `Bearer ${token}`)
         .set('content-type', 'application/json')
@@ -117,7 +119,7 @@ describe('Case', () => {
 
     it('and return points for all cases', async () => {
       const results = await chai
-        .request(server.app)
+        .request(server)
         .post(`/cases/points`)
         .set('Authorization', `Bearer ${token}`)
         .set('content-type', 'application/json')
@@ -139,7 +141,7 @@ describe('Case', () => {
 
     it('and returns no points if no caseIds are passed', async () => {
       const results = await chai
-        .request(server.app)
+        .request(server)
         .post(`/cases/points`)
         .set('Authorization', `Bearer ${token}`)
         .set('content-type', 'application/json')
@@ -155,7 +157,7 @@ describe('Case', () => {
 
     it('and fails if caseIds are not passed', async () => {
       const results = await chai
-        .request(server.app)
+        .request(server)
         .post(`/cases/points`)
         .set('Authorization', `Bearer ${token}`)
         .set('content-type', 'application/json')
@@ -189,7 +191,7 @@ describe('Case', () => {
       };
 
       const results = await chai
-        .request(server.app)
+        .request(server)
         .post(`/case/point`)
         .set('Authorization', `Bearer ${token}`)
         .set('content-type', 'application/json')
@@ -238,7 +240,7 @@ describe('Case', () => {
       };
 
       const results = await chai
-        .request(server.app)
+        .request(server)
         .put(`/case/point`)
         .set('Authorization', `Bearer ${token}`)
         .set('content-type', 'application/json')
@@ -284,7 +286,7 @@ describe('Case', () => {
       };
 
       const results = await chai
-        .request(server.app)
+        .request(server)
         .post(`/case/point/delete`)
         .set('Authorization', `Bearer ${token}`)
         .set('content-type', 'application/json')
@@ -312,7 +314,7 @@ describe('Case', () => {
       };
 
       const result = await chai
-        .request(server.app)
+        .request(server)
         .post(`/case/consent-to-publishing`)
         .set('Authorization', `Bearer ${token}`)
         .set('content-type', 'application/json')
@@ -349,7 +351,7 @@ describe('Case', () => {
       };
 
       const results = await chai
-        .request(server.app)
+        .request(server)
         .post(`/case/stage`)
         .set('Authorization', `Bearer ${token}`)
         .set('content-type', 'application/json')
@@ -397,7 +399,7 @@ describe('Case', () => {
       };
 
       const results = await chai
-        .request(server.app)
+        .request(server)
         .post(`/cases/publish?type=${type}`)
         .set('Authorization', `Bearer ${token}`)
         .set('content-type', 'application/json')
@@ -426,7 +428,7 @@ describe('Case', () => {
       };
 
       const results = await chai
-        .request(server.app)
+        .request(server)
         .post(`/cases/publish?type=json`)
         .set('Authorization', `Bearer ${token}`)
         .set('content-type', 'application/json')
@@ -501,7 +503,7 @@ describe('Case', () => {
       };
 
       const results = await chai
-        .request(server.app)
+        .request(server)
         .post(`/cases/publish?type=json`)
         .set('Authorization', `Bearer ${token}`)
         .set('content-type', 'application/json')
@@ -546,7 +548,7 @@ describe('Case', () => {
       };
 
       const results = await chai
-        .request(server.app)
+        .request(server)
         .post(`/cases/publish?type=${type}`)
         .set('Authorization', `Bearer ${token}`)
         .set('content-type', 'application/json')
@@ -566,7 +568,7 @@ describe('Case', () => {
       };
 
       const results = await chai
-        .request(server.app)
+        .request(server)
         .post(`/cases/publish?type=json`)
         .set('Authorization', `Bearer ${token}`)
         .set('content-type', 'application/json')
@@ -606,7 +608,7 @@ describe('Case', () => {
       };
 
       const results = await chai
-        .request(server.app)
+        .request(server)
         .post(`/cases/publish`)
         .set('Authorization', `Bearer ${token}`)
         .set('content-type', 'application/json')
@@ -636,7 +638,7 @@ describe('Case', () => {
       };
 
       const results = await chai
-        .request(server.app)
+        .request(server)
         .post(`/case/delete`)
         .set('Authorization', `Bearer ${token}`)
         .set('content-type', 'application/json')
@@ -662,7 +664,7 @@ describe('Case', () => {
       };
 
       const results = await chai
-        .request(server.app)
+        .request(server)
         .put(`/case`)
         .set('Authorization', `Bearer ${token}`)
         .set('content-type', 'application/json')
@@ -702,7 +704,7 @@ describe('Case', () => {
     })
     it('return a 200', async () => {
       const results = await chai
-        .request(server.app)
+        .request(server)
         .get(`/organization/cases`)
         .set('Authorization', `Bearer ${token}`)
         .set('content-type', 'application/json');

@@ -4,7 +4,9 @@ const atob = require('atob');
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const expect = chai.expect;
-const server = require('../../app');
+
+const app = require('../../app');
+const server = app.getTestingServer();
 
 //  const mockData = require('../lib/mockData');
 
@@ -29,7 +31,7 @@ describe('POST /login', function() {
 
   it('should login on user creds and return map api key', function(done) {
     chai
-      .request(server.app)
+      .request(server)
       .post('/login')
       .send({
         username: 'spladmin',
@@ -54,7 +56,7 @@ describe('POST /login', function() {
 
   it('should fail when wrong password is given saying creds are invalid', function(done) {
     chai
-      .request(server.app)
+      .request(server)
       .post('/login')
       .send({
         username: 'spladmin',
@@ -71,7 +73,7 @@ describe('POST /login', function() {
 
   it('should fail with invalid username saying creds are invalid', function(done) {
     chai
-      .request(server.app)
+      .request(server)
       .post('/login')
       .send({
         username: 'wronguser',

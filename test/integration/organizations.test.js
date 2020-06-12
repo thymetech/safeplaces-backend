@@ -9,7 +9,9 @@ const jwt = require('jsonwebtoken');
 
 const mockData = require('../lib/mockData');
 
-const server = require('../../app');
+const app = require('../../app');
+const server = app.getTestingServer();
+
 const organizations = require('../../db/models/organizations');
 
 const jwtSecret = require('../../config/jwtConfig');
@@ -76,7 +78,7 @@ describe('Organization ', () => {
 
     it('fetch the record using http', async () => {
       const results = await chai
-        .request(server.app)
+        .request(server)
         .get(`/organization`)
         .set('Authorization', `Bearer ${token}`)
         .set('content-type', 'application/json');
@@ -90,7 +92,7 @@ describe('Organization ', () => {
 
     it('fetch the configuration using http', async () => {
       const results = await chai
-        .request(server.app)
+        .request(server)
         .get(`/organization/configuration`)
         .set('Authorization', `Bearer ${token}`)
         .set('content-type', 'application/json');
@@ -131,7 +133,7 @@ describe('Organization ', () => {
       };
 
       const results = await chai
-        .request(server.app)
+        .request(server)
         .put(`/organization/configuration`)
         .set('Authorization', `Bearer ${token}`)
         .set('content-type', 'application/json')
@@ -154,7 +156,7 @@ describe('Organization ', () => {
 
     it('fetch the organizations cases', async () => {
       const results = await chai
-        .request(server.app)
+        .request(server)
         .get(`/organization/cases`)
         .set('Authorization', `Bearer ${token}`)
         .set('content-type', 'application/json');
@@ -179,7 +181,7 @@ describe('Organization ', () => {
 
     it('returns a 200', async () => {
       const results = await chai
-        .request(server.app)
+        .request(server)
         .post(`/organization/case`)
         .set('Authorization', `Bearer ${token}`)
         .set('content-type', 'application/json')

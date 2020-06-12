@@ -1,9 +1,8 @@
-const server = require('../../../src/server');
-const passport = require('../../../src/server/passport')
+const { router } = require('../../server');
 const controller = require('./controller');
 
-server.post(
+router.post(
   '/login',
-  passport.authenticate('ldap'),
+  router.passport.authenticate('ldap'),
   controller.login
 );

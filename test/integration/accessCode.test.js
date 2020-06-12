@@ -9,8 +9,10 @@ const chaiHttp = require('chai-http');
 const jwt = require('jsonwebtoken');
 const jwtSecret = require('../../config/jwtConfig');
 
-const server = require('../../app');
 const mockData = require('../lib/mockData');
+
+const app = require('../../app');
+const server = app.getTestingServer();
 
 chai.use(chaiHttp);
 
@@ -52,15 +54,16 @@ describe('POST /access-code', () => {
 
   it('should fail for unauthorized clients', async () => {
     let result = await chai
-      .request(server.app)
+      .request(server)
       .post('/access-code')
       .send();
+      
     result.should.have.status(401);
   });
 
   it('should create a new access code', async () => {
     let result = await chai
-      .request(server.app)
+      .request(server)
       .post('/access-code')
       .set('Authorization', `Bearer ${token}`)
       .send();
