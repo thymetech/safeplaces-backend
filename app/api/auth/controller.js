@@ -3,7 +3,7 @@ const auth = require('../../auth');
 
 exports.login = (req, res) => {
   const { username, password } = req.body;
-  console.log(`${process.env.AUTH0_BASE_URL}/oauth/token`);
+  
   request('POST', `${process.env.AUTH0_BASE_URL}/oauth/token`)
     .type('form')
     .send({
